@@ -1,6 +1,6 @@
 import time
-
 import tinvest
+import math
 from pprint import pprint
 import KEY
 
@@ -19,9 +19,6 @@ def SetCurrency(tokenCl,brokerAccountId):
     )
     client.set_sandbox_currencies_balance(body,brokerAccountId)
 
-
-
-
 def SetPosition(tokenCl, brokerAccountId, MoneyBalans, StocksFIGI):
     client = tinvest.SyncClient(tokenCl,use_sandbox=True)
     body = tinvest.SandboxSetPositionBalanceRequest(
@@ -30,24 +27,15 @@ def SetPosition(tokenCl, brokerAccountId, MoneyBalans, StocksFIGI):
         )
     client.set_sandbox_positions_balance(body, brokerAccountId)
 
-
-
-
 def getStocks(tokenCl):
     stocks = {}
     client = tinvest.SyncClient(tokenCl, use_sandbox=True)
     response = client.get_portfolio()
-    if response.status == 'Ok':
-        positions = response.payload.positions
-        pprint(positions)
-        for i in positions:
-            key = i.name
-            if i.average_position_price==None:
-                continue
-            value = i.average_position_price.value
-
-            stocks[key] = float(value)
-
+    positions = response.payload.positions
+    for i in positions:
+        key = i.name
+        balance = i.balance
+        stocks[key] = [float(balance), i.instrument_type.value]
     return stocks
 
 def getStocks2(tokenCl):
@@ -67,7 +55,7 @@ def getMarketStocks(tokenCl):
 
 pprint("Hello")
 
-# SetPosition(TOKEN, BrokerAccountId, 5, "BBG000HLJ7M4")
-
-getMarketStocks(TOKEN)
+# SetPosition(TOKEN, BrokerAccountId, 5, "BBG000BPL8G3")
+pprint(getStocks(TOKEN))
+# getMarketStocks(TOKEN)
 
