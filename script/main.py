@@ -48,10 +48,8 @@ def getMarketStocks(tokenCl):
     client =  tinvest.SyncClient(tokenCl, use_sandbox=True)
     mass=client.get_market_stocks()
     for i in mass.payload.instruments:
-        client.get_market_orderbook(i.figi, 1)
-        if client.get_market_orderbook(i.figi, 1).status=="Ok":
-            print("Навазние Акции: ",i.name, "  Цена закрытия:",client.get_market_orderbook(i.figi, 5).payload.close_price," ", i.currency.value )
-            time.sleep(0.02)
+        print("Навазние Акции: ",i.name, "  Цена закрытия:",client.get_market_orderbook(i.figi, 5).payload.close_price," ", i.currency.value )
+        time.sleep(0.02)
 
 pprint("Hello")
 
