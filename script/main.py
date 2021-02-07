@@ -63,7 +63,7 @@ def getMarketStocks(tokenCl):
         client.get_market_orderbook(i.figi, 1)
         if client.get_market_orderbook(i.figi, 1).status=="Ok":
             print("Навазние Акции: ",i.name, "  Цена закрытия:",client.get_market_orderbook(i.figi, 5).payload.close_price," ", i.currency.value )
-            time.sleep(0.2)
+            time.sleep(0.02)
 
 pprint("Hello")
 
